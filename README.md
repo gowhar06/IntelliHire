@@ -1,217 +1,193 @@
-Sure! Below is the **complete and detailed `README.md` file code** for your AI project: **IntelliHire – Smart Talent Matching System**.
-
-You can copy this directly into your GitHub project as `README.md`.
-
----
-
-```markdown
 # 🧠 IntelliHire – Smart Talent Matching System
 
-IntelliHire is an AI-powered talent intelligence platform that automates resume screening and intelligently matches candidates to job descriptions using advanced NLP and semantic search.
-
-It streamlines the recruitment process by analyzing resumes and job descriptions using transformer-based models and delivers smart candidate-job fit scores to recruiters, reducing manual effort and increasing hiring accuracy.
+**IntelliHire** is an AI-powered resume screening and job matching platform that leverages state-of-the-art Natural Language Processing (NLP) to automatically analyze resumes and job descriptions, compute fit scores, and help recruiters identify the best candidates efficiently.
 
 ---
 
-## 🚀 Features
+## 🔍 Features
 
-- ✅ Upload resumes (PDF/DOCX)
-- ✅ Extract and structure candidate data using NLP
-- ✅ Parse job descriptions
-- ✅ Generate semantic embeddings using SBERT
-- ✅ Intelligent resume-job matching using similarity search
-- ✅ Match score dashboard with skill gap highlights
-- ✅ RESTful API for frontend/backend interaction
-- ✅ Modern and responsive UI with React + Tailwind
+- Upload and extract text from resumes (PDF/DOCX)
+- Parse job descriptions
+- Generate embeddings using BERT/Sentence-BERT
+- Perform semantic similarity matching
+- Return top matching resumes with scores
+- Clean and intuitive UI with React + Tailwind
+- RESTful API using FastAPI
+- Vector search using FAISS or Pinecone
+- Store structured data using PostgreSQL or MongoDB
 
 ---
 
-## 🧱 Tech Stack
+## ⚙️ Tech Stack
 
-| Layer        | Technologies |
-|--------------|--------------|
-| **Frontend** | React.js, Tailwind CSS |
-| **Backend**  | FastAPI (Python), REST API |
-| **NLP & ML** | Sentence-BERT (`sentence-transformers`), spaCy, `PyMuPDF`, `python-docx` |
-| **Vector DB**| Pinecone / FAISS |
-| **Database** | PostgreSQL / MongoDB |
-| **Storage**  | AWS S3 / Cloudinary |
-| **Deployment** | Vercel (Frontend), Render / Hugging Face Spaces (Backend/Model) |
+| Component     | Technology                      |
+|---------------|----------------------------------|
+| Frontend      | React.js, Tailwind CSS           |
+| Backend       | FastAPI (Python)                 |
+| NLP Models    | Sentence-BERT, spaCy             |
+| File Parsing  | PyMuPDF, python-docx             |
+| Vector DB     | FAISS / Pinecone                 |
+| Database      | PostgreSQL / MongoDB             |
+| Deployment    | Vercel (Frontend), Render or HF Spaces (Backend) |
 
 ---
 
 ## 📁 Project Structure
 
 ```
-
 intellihire/
 ├── backend/
 │   ├── main.py
-│   ├── api/
 │   ├── matcher/
 │   ├── parser/
 │   └── requirements.txt
 ├── frontend/
 │   ├── src/
 │   ├── public/
-│   ├── tailwind.config.js
 │   └── package.json
 ├── README.md
 └── .env
-
-````
-
----
-
-## ⚙️ Setup Instructions
-
-### 🔧 Backend (FastAPI)
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/intellihire.git
-   cd intellihire/backend
-````
-
-2. Set up a Python virtual environment:
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. Install the dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Start the FastAPI server:
-
-   ```bash
-   uvicorn main:app --reload
-   ```
-
-5. Visit API docs at:
-
-   ```
-   http://localhost:8000/docs
-   ```
-
-### 🖥️ Frontend (React + Tailwind)
-
-1. Navigate to frontend directory:
-
-   ```bash
-   cd ../frontend
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Run the development server:
-
-   ```bash
-   npm run dev
-   ```
+```
 
 ---
 
-## 🧠 Resume-Job Matching Logic (Example)
+## 🚀 Getting Started
+
+### ✅ Prerequisites
+
+- Python 3.8+
+- Node.js 18+
+- pip
+- npm or yarn
+
+---
+
+### 🔧 Backend Setup (FastAPI)
+
+```bash
+# Navigate to backend
+cd intellihire/backend
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run server
+uvicorn main:app --reload
+```
+
+---
+
+### 🖥️ Frontend Setup (React)
+
+```bash
+# Navigate to frontend
+cd ../frontend
+
+# Install dependencies
+npm install
+
+# Run dev server
+npm run dev
+```
+
+---
+
+## 💡 Resume Matching Logic
 
 ```python
 from sentence_transformers import SentenceTransformer, util
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+model = SentenceTransformer('all-MiniLM-L6-v2')
 
-def get_match_score(resume_text, job_description):
+def calculate_score(resume_text, job_text):
     resume_vec = model.encode(resume_text, convert_to_tensor=True)
-    job_vec = model.encode(job_description, convert_to_tensor=True)
+    job_vec = model.encode(job_text, convert_to_tensor=True)
     score = util.cos_sim(resume_vec, job_vec)
     return float(score[0][0])
 ```
 
 ---
 
-## 📡 Key API Endpoints
+## 🛠️ API Endpoints
 
-| Method | Endpoint         | Description                    |
-| ------ | ---------------- | ------------------------------ |
-| POST   | `/upload-resume` | Upload and parse resume        |
-| POST   | `/submit-job`    | Submit job description         |
-| GET    | `/get-matches`   | Return top matches with scores |
+| Method | Endpoint           | Description                  |
+|--------|--------------------|------------------------------|
+| POST   | `/upload-resume`   | Upload and extract text      |
+| POST   | `/submit-job`      | Submit job description       |
+| GET    | `/get-matches`     | Get top matches              |
 
 ---
 
-## 📦 Dependencies
+## 📦 Backend Dependencies
 
-```bash
-# Backend
+```
 fastapi
 uvicorn
 sentence-transformers
 spacy
 PyMuPDF
 python-docx
-pydantic
 pinecone-client
 faiss-cpu
-
-# Frontend
-react
-tailwindcss
-axios
-vite
+pydantic
 ```
 
 ---
 
-## 🚀 Deployment Guide
+## 📊 Frontend Dependencies
 
-| Component    | Platform                                                                              | Notes                   |
-| ------------ | ------------------------------------------------------------------------------------- | ----------------------- |
-| Frontend     | [Vercel](https://vercel.com/)                                                         | Connect GitHub repo     |
-| Backend API  | [Render](https://render.com/) or [Hugging Face Spaces](https://huggingface.co/spaces) | Supports Python FastAPI |
-| DB & Storage | [MongoDB Atlas](https://www.mongodb.com/atlas), [AWS S3](https://aws.amazon.com/s3/)  | Secure cloud storage    |
+```bash
+npm install react tailwindcss axios vite
+```
 
 ---
 
-## ✨ Future Roadmap
+## 📤 Deployment
 
-* [ ] OCR support for image-based resumes (Tesseract)
-* [ ] Auto email alerts to shortlisted candidates
-* [ ] Bias detection and diversity scoring
-* [ ] Export shortlisted candidates to CSV/PDF
-* [ ] Admin dashboard with filtering and analytics
-* [ ] AI chatbot for recruiter queries
+| Component  | Platform            | Notes                      |
+|------------|---------------------|----------------------------|
+| Frontend   | Vercel              | Connect GitHub repo        |
+| Backend    | Render / HF Spaces  | Python app hosting         |
+| Database   | MongoDB Atlas       | Free tier available        |
+| Vector DB  | Pinecone            | Free tier for 1 index      |
+
+---
+
+## 📈 Future Improvements
+
+- Resume OCR support (image to text)
+- Bias detection and explanation
+- Candidate notifications
+- Admin dashboard with analytics
+- Export results as PDF/CSV
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Follow the steps:
-
-1. Fork this repo
-2. Create your feature branch: `git checkout -b feature/your-feature-name`
-3. Commit your changes: `git commit -m "Add some feature"`
-4. Push to the branch: `git push origin feature/your-feature-name`
-5. Open a pull request
+```bash
+# Fork repo
+# Create branch
+git checkout -b feature/your-feature
+# Commit and push
+git commit -m "Add feature"
+git push origin feature/your-feature
+# Create Pull Request
+```
 
 ---
 
-## 📜 License
+## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
+Licensed under the [MIT License](LICENSE)
 
 ---
 
 ## 📬 Contact
 
-For support or inquiries, email:
-📧 [your.email@example.com](mailto:your.email@example.com)
-🔗 GitHub: [github.com/yourusername](https://github.com/yourusername)
-
----
+- 📧 Email: your.email@example.com
+- 🌐 GitHub: [https://github.com/yourusername](https://github.com/yourusername)
